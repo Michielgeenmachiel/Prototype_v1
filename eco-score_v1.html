@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eco-Score — Product Details</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-dark:  #1e4d3a;
+    --green-mid:   #2e6b52;
+    --green-soft:  #4a9070;
+    --green-pale:  #d4ede3;
+    --green-wash:  #eef7f2;
+    --sand:        #f5f0e8;
+    --sand-dark:   #e8e0d0;
+    --coral:       #c4523a;
+    --text-dark:   #1a2420;
+    --text-mid:    #3d5048;
+    --text-light:  #7a9488;
+    --radius:      12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--sand);
+    color: var(--text-dark);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ───────────────────────────────────────────────── */
+  .hero {
+    background: var(--green-dark);
+    padding: 48px 24px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(74,144,112,0.15);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(74,144,112,0.10);
+  }
+
+  .hero-inner {
+    max-width: 480px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .tag {
+    display: inline-block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green-pale);
+    border: 1px solid rgba(212,237,227,0.3);
+    border-radius: 20px;
+    padding: 5px 14px;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(38px, 8vw, 56px);
+    color: #fff;
+    line-height: 1.05;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--green-pale);
+  }
+
+  .hero p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+    max-width: 340px;
+    margin-bottom: 36px;
+  }
+
+  /* ── SCORE BADGE ───────────────────────────────────────── */
+  .score-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 12px;
+  }
+
+  .score-letter {
+    font-family: 'DM Serif Display', serif;
+    font-size: 64px;
+    line-height: 1;
+    color: #fff;
+    width: 72px;
+    text-align: center;
+    position: relative;
+  }
+
+  .score-letter::after {
+    content: '';
+    position: absolute;
+    bottom: 4px; left: 50%;
+    transform: translateX(-50%);
+    width: 48px; height: 3px;
+    background: var(--coral);
+    border-radius: 2px;
+  }
+
+  .score-meta { flex: 1; }
+
+  .score-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 4px;
+  }
+
+  .score-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+
+  .score-bar {
+    height: 6px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .score-bar-fill {
+    height: 100%;
+    width: 20%;
+    background: var(--coral);
+    border-radius: 3px;
+    transition: width 1.2s cubic-bezier(.16,1,.3,1);
+  }
+
+  .score-note {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.5;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 8px;
+    border-left: 2px solid var(--coral);
+  }
+
+  /* ── SCALE ─────────────────────────────────────────────── */
+  .scale-section {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--text-dark);
+    margin-bottom: 16px;
+  }
+
+  .scale-bar {
+    display: flex;
+    border-radius: var(--radius);
+    overflow: hidden;
+    height: 52px;
+    margin-bottom: 12px;
+    gap: 2px;
+  }
+
+  .scale-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: #fff;
+    position: relative;
+    transition: flex 0.3s ease;
+    cursor: default;
+  }
+
+  .scale-item.active { flex: 1.8; }
+
+  .scale-item span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    position: absolute;
+    bottom: 5px;
+    letter-spacing: 0.05em;
+    opacity: 0.75;
+  }
+
+  .s-a { background: #2d7a4f; }
+  .s-b { background: #5aaa6e; }
+  .s-c { background: #94c95e; }
+  .s-d { background: #f5b730; }
+  .s-e { background: #c4523a; }
+
+  .scale-desc {
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+
+  /* ── DETAILS CARDS ─────────────────────────────────────── */
+  .details-section {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 24px 32px;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 12px;
+    border: 1px solid var(--sand-dark);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .card-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: var(--green-wash);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .card-icon svg { width: 18px; height: 18px; }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-dark);
+  }
+
+  .card-sub {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 1px;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--sand);
+    font-size: 13px;
+  }
+  .row:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .row-label { color: var(--text-light); }
+  .row-value { font-weight: 500; color: var(--text-dark); }
+
+  .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .pill-bad  { background: #fde8e4; color: var(--coral); }
+  .pill-mid  { background: #fef3d7; color: #a06c00; }
+  .pill-good { background: var(--green-pale); color: var(--green-dark); }
+
+  /* ── ALTERNATIVES ──────────────────────────────────────── */
+  .alt-section {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 24px 32px;
+  }
+
+  .alt-card {
+    background: var(--green-wash);
+    border-radius: var(--radius);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
+    border: 1px solid var(--green-pale);
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .alt-card:hover { background: var(--green-pale); }
+
+  .alt-badge {
+    font-family: 'DM Serif Display', serif;
+    font-size: 24px;
+    width: 44px; height: 44px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    color: #fff;
+  }
+
+  .alt-info { flex: 1; }
+  .alt-name { font-size: 14px; font-weight: 500; color: var(--text-dark); }
+  .alt-sub  { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+  .alt-arrow { color: var(--text-light); font-size: 18px; }
+
+  /* ── FOOTER ────────────────────────────────────────────── */
+  .footer {
+    background: var(--green-dark);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 24px;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  .footer strong { color: rgba(255,255,255,0.8); }
+
+  /* ── ANIMATIONS ────────────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-inner > * {
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards;
+  }
+  .tag           { animation-delay: 0.05s; }
+  .hero h1       { animation-delay: 0.15s; }
+  .hero p        { animation-delay: 0.25s; }
+  .score-section { animation-delay: 0.35s; }
+  .score-note    { animation-delay: 0.42s; }
+
+  .card, .alt-card, .scale-section {
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards;
+  }
+  .scale-section { animation-delay: 0.1s; }
+  .card:nth-child(1) { animation-delay: 0.15s; }
+  .card:nth-child(2) { animation-delay: 0.25s; }
+  .card:nth-child(3) { animation-delay: 0.35s; }
+  .alt-card:nth-child(2) { animation-delay: 0.1s; }
+  .alt-card:nth-child(3) { animation-delay: 0.2s; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="tag">Eco-Score — Product details</div>
+    <h1>This item<br>scores a <em>D.</em></h1>
+    <p>Here is a full breakdown of the environmental impact of this garment, and better alternatives at a similar price.</p>
+
+    <div class="score-section">
+      <div class="score-letter">D</div>
+      <div class="score-meta">
+        <div class="score-label">Overall eco-score</div>
+        <div class="score-title">Low sustainability</div>
+        <div class="score-bar">
+          <div class="score-bar-fill" id="scoreBar"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="score-note">
+      This garment ranks in the bottom 30% of items in its category. Switching to an A or B rated alternative avoids roughly 8 kg of CO&#8322; per item.
+    </div>
+  </div>
+</section>
+
+<!-- SCALE -->
+<section class="scale-section">
+  <div class="section-title">How the scale works</div>
+  <div class="scale-bar">
+    <div class="scale-item s-a">A<span>Best</span></div>
+    <div class="scale-item s-b">B</div>
+    <div class="scale-item s-c">C</div>
+    <div class="scale-item s-d active">D<span>This item</span></div>
+    <div class="scale-item s-e">E<span>Worst</span></div>
+  </div>
+  <p class="scale-desc">The score is based on raw material sourcing, energy use in production, transport distance, estimated garment lifespan, and end-of-life recyclability.</p>
+</section>
+
+<!-- DETAIL CARDS -->
+<section class="details-section">
+  <div class="section-title">Full breakdown</div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#2e6b52" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7z"/><circle cx="12" cy="9" r="2.5"/>
+        </svg>
+      </div>
+      <div>
+        <div class="card-title">Materials & origin</div>
+        <div class="card-sub">Where this garment comes from</div>
+      </div>
+    </div>
+    <div class="row"><span class="row-label">Primary material</span><span class="row-value">100% polyester</span></div>
+    <div class="row"><span class="row-label">Material source</span><span class="pill pill-bad">Conventional (fossil-based)</span></div>
+    <div class="row"><span class="row-label">Country of manufacture</span><span class="row-value">Bangladesh</span></div>
+    <div class="row"><span class="row-label">Transport distance</span><span class="row-value">~8,200 km</span></div>
+    <div class="row"><span class="row-label">Living wage paid</span><span class="pill pill-bad">Not verified</span></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#2e6b52" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12h4l3-9 4 18 3-9h4"/>
+        </svg>
+      </div>
+      <div>
+        <div class="card-title">Environmental impact</div>
+        <div class="card-sub">CO&#8322; and resource use</div>
+      </div>
+    </div>
+    <div class="row"><span class="row-label">CO&#8322; footprint</span><span class="pill pill-bad">~12.4 kg CO&#8322;</span></div>
+    <div class="row"><span class="row-label">Water consumption</span><span class="row-value">~2,700 litres</span></div>
+    <div class="row"><span class="row-label">Microplastic release</span><span class="pill pill-bad">High risk (synthetic)</span></div>
+    <div class="row"><span class="row-label">End-of-life recyclability</span><span class="pill pill-mid">Partial</span></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#2e6b52" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="card-title">Durability & longevity</div>
+        <div class="card-sub">How long it is designed to last</div>
+      </div>
+    </div>
+    <div class="row"><span class="row-label">Expected lifespan</span><span class="pill pill-bad">&lt; 10 washes</span></div>
+    <div class="row"><span class="row-label">Repairability</span><span class="pill pill-bad">Low</span></div>
+    <div class="row"><span class="row-label">Brand take-back scheme</span><span class="row-value">No</span></div>
+  </div>
+</section>
+
+<!-- ALTERNATIVES -->
+<section class="alt-section">
+  <div class="section-title">Better alternatives</div>
+
+  <a class="alt-card" href="#">
+    <div class="alt-badge s-a">A</div>
+    <div class="alt-info">
+      <div class="alt-name">Organic cotton tee — similar style</div>
+      <div class="alt-sub">GOTS certified · Made in Portugal · ~€22</div>
+    </div>
+    <div class="alt-arrow">›</div>
+  </a>
+
+  <a class="alt-card" href="#">
+    <div class="alt-badge s-b">B</div>
+    <div class="alt-info">
+      <div class="alt-name">Recycled polyester blend</div>
+      <div class="alt-sub">50% recycled content · Fair trade · ~€18</div>
+    </div>
+    <div class="alt-arrow">›</div>
+  </a>
+
+  <a class="alt-card" href="#">
+    <div class="alt-badge s-b">B</div>
+    <div class="alt-info">
+      <div class="alt-name">Second-hand — same brand &amp; size</div>
+      <div class="alt-sub">Vinted · Pre-owned · ~€6</div>
+    </div>
+    <div class="alt-arrow">›</div>
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <strong>Eco-Score</strong> — prototype v0.1<br>
+  Data on this page is illustrative and for demonstration purposes only.<br>
+  Built by Team 21 · Tilburg University · 2026
+</footer>
+
+<script>
+  // Animate score bar after load
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('scoreBar').style.width = '20%';
+    }, 600);
+  });
+</script>
+
+</body>
+</html>
